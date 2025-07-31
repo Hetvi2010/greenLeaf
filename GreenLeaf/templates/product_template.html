@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GreenLeaf Product Cards</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+  
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f2f7f5;
+      margin: 0;
+      padding: 0rem;
+    }
+  
+    h1 {
+      text-align: center;
+      color: #2a3d34;
+      margin-bottom: 2rem;
+    }
+  
+    form {
+      max-width: 1000px;
+      margin: 0 auto 2rem;
+      padding-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+  
+    input, select, button {
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+    }
+  
+    .product-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+  
+    .product-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease;
+    }
+  
+    .product-card:hover {
+      transform: translateY(-6px);
+    }
+  
+    .product-image {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      overflow: hidden;
+    }
+  
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  
+    .badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background-color: red;
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+  
+    .product-content {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+  
+    .product-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #1a1a1a;
+      margin-bottom: 0.25rem;
+    }
+  
+    .product-desc {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 0.75rem;
+      height: 2.5rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  
+    .rating {
+      display: flex;
+      align-items: center;
+      font-size: 1rem;
+      color: #ccc;
+      margin-bottom: 0.75rem;
+    }
+  
+    .review-count {
+      background-color: #ffe08a;
+      color: black;
+      font-weight: bold;
+      padding: 0.25rem 0.5rem;
+      margin-left: 0.5rem;
+      border-radius: 5px;
+      font-size: 0.85rem;
+    }
+  
+    .price-delete {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+    }
+  
+    .price {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #1c2b33;
+    }
+    .card-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.wishlist-btn,
+.cart-btn {
+  background: #f1f1f1;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.wishlist-btn:hover {
+  background: #ffe0e0;
+  color: #c53030;
+}
+
+.cart-btn:hover {
+  background: #def7e1;
+  color: #2b7a2b;
+}
+
+  
+    @media (max-width: 500px) {
+      .product-desc {
+        height: auto;
+      }
+    }
+    
+    .product-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.product-options label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.product-options select {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background: white;
+}
+
+  </style>
+  
+</head>
+<body>
+
+    <header>
+        <div class="logo">🌿 GreenLeaf</div>
+        <div class="header-controls">
+          <div class="theme-toggle" onclick="toggleTheme()">🌙</div>
+          <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        </div>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+<form method="GET" style="max-width: 800px; margin: 0 auto 2rem auto; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+    <input type="text" name="search" placeholder="Search plants..." value="{{SEARCH_QUERY}}" style="padding: 0.5rem; flex: 1; min-width: 200px;" />
+  
+    <select name="price_filter" style="padding: 0.5rem;">
+      <option value="">Filter by Price</option>
+      <option value="low" {{PRICE_LOW}}>Below $10</option>
+      <option value="mid" {{PRICE_MID}}>$10 - $15</option>
+      <option value="high" {{PRICE_HIGH}}>Above $15</option>
+    </select>
+  
+    <select name="days_filter" style="padding: 0.5rem;">
+      <option value="">Filter by Days Left</option>
+      <option value="short" {{DAYS_SHORT}}>< 200 days</option>
+      <option value="medium" {{DAYS_MEDIUM}}>200–300 days</option>
+      <option value="long" {{DAYS_LONG}}>> 300 days</option>
+    </select>
+  
+    <button type="submit" style="padding: 0.5rem 1rem; background-color: #1a3d2f; color: white; border: none; border-radius: 6px; cursor: pointer;">Search</button>
+  </form>
+  
+<div class="product-list">
+  {{PRODUCT_CARDS}}
+</div>
+
+<footer class="footer">
+    <div class="footer-container">
+      <div class="footer-links">
+        <div class="footer-logo">
+          <span class="footer-brand">GreenLeaf</span>
+        </div>
+        <div class="footer-columns">
+          <div class="footer-column">
+            <h4>Resources</h4>
+            <ul>
+                <a href="#" id="plantTipsLink">Plant Care Tips</a>
+              <li><a href="#" id="GardeningLink">Gardening Guides</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h4>Get in Touch</h4>
+            <ul>
+              <li><a href="#">Support</a></li>
+              <li><a href="#">About Us</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h4>Legal</h4>
+            <ul>
+              <li><a href="#" id="privacyLink">Privacy Policy</a></li>
+              <li><a href="#" id="termLinks">Terms & Conditions</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="newsletter">
+        <h3>Subscribe to our Newsletter</h3>
+        <p>Provide your email to get email notification when someone adds new product.</p>
+        <form>
+          <input type="email" placeholder="Enter your email address" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 GreenLeaf™. All Rights Reserved.</p>
+        <div class="social-icons">
+          <a href="#">Fb</a>
+          <a href="#">X</a>
+          <a href="#">Git</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
